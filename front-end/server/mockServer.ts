@@ -1,9 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
 const PORT = 4000;
 
+app.use(cors());
 app.use(bodyParser.json());
 
 interface ChatRequest {
@@ -15,6 +17,17 @@ interface ChatResponse {
 }
 
 app.post('/api/chat', (req, res) => {
+    console.log('request', req)
+    const request: ChatRequest = req.body;
+
+    setTimeout(() => {
+        const response: ChatResponse = { reply: 'This is a mock response from the AI.' };
+        res.send(response);
+    }, 1000);
+});
+
+app.get('/api/chat', (req, res) => {
+    console.log('request', req)
     const request: ChatRequest = req.body;
 
     setTimeout(() => {

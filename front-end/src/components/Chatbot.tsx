@@ -60,7 +60,7 @@ function Chatbot() {
         setInputValue('');
 
         try {
-            const mockResponse = await axios.post('/api/chat', {
+            const mockResponse = await axios.post('http://localhost:4000/api/chat', {
                 message: inputValue,
             });
 
