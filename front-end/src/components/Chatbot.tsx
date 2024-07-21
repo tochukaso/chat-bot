@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ChatMessage from './ChatMessage';
@@ -6,41 +6,49 @@ import ChatMessage from './ChatMessage';
 const ChatContainer = styled.div`
   width: 400px;
   height: 600px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ChatBox = styled.div`
   flex: 1;
   padding: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const InputBox = styled.div`
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.light};
 `;
 
 const Input = styled.input`
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius};
   margin-right: 10px;
+  outline: none;
 `;
 
 const Button = styled.button`
-  padding: 10px 20px;
+  padding: 0 20px;
   border: none;
-  background-color: #007bff;
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.dark};
+  }
 `;
 
 interface Message {
@@ -48,9 +56,23 @@ interface Message {
     sender: 'user' | 'bot';
 }
 
-function Chatbot() {
+const Chatbot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
+
+    useEffect(() => {
+        const fetchInitialMessage = async () => {
+            try {
+                const response = await axios.get('http://localhost:4000/api/chat');
+                const initialMessage: Message = { text: response.data.reply, sender: 'bot' };
+                setMessages([initialMessage]);
+            } catch (error) {
+                console.error('Error fetching initial message:', error);
+            }
+        };
+
+        fetchInitialMessage();
+    }, []);
 
     const sendMessage = async () => {
         if (inputValue.trim() === '') return;
@@ -88,6 +110,6 @@ function Chatbot() {
             </InputBox>
         </ChatContainer>
     );
-}
+};
 
 export default Chatbot;

@@ -10,9 +10,10 @@ const MessageContainer = styled.div<{ sender: 'user' | 'bot' }>`
 const MessageBubble = styled.div<{ sender: 'user' | 'bot' }>`
   max-width: 70%;
   padding: 10px;
-  border-radius: 10px;
-  background-color: ${(props) => (props.sender === 'user' ? '#007bff' : '#e5e5ea')};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  background-color: ${(props) => (props.sender === 'user' ? props.theme.colors.primary : props.theme.colors.light)};
   color: ${(props) => (props.sender === 'user' ? 'white' : 'black')};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 interface ChatMessageProps {
