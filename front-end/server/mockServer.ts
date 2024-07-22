@@ -16,7 +16,7 @@ interface ChatResponse {
     reply: string;
 }
 
-app.post('/api/chat', (req, res) => {
+app.post('/chat', (req, res) => {
     console.log('request', req)
     const request: ChatRequest = req.body;
 
@@ -26,7 +26,7 @@ app.post('/api/chat', (req, res) => {
     }, 1000);
 });
 
-app.get('/api/chat', (req, res) => {
+app.get('/chat', (req, res) => {
     console.log('request', req)
     const request: ChatRequest = req.body;
 

@@ -10,10 +10,13 @@ client = OpenAI(
 
 
 def create_embedding(text):
-    tokens = count_tokens(text)
-    if tokens > EMBEDDING_MAX_TOKENS:
+    # トークン数が8192に収まるまでループ処理する
+    while True:
+        tokens = count_tokens(text, EMBEDDING_MODEL)
+        if tokens <= EMBEDDING_MAX_TOKENS:
+            break
         # 8192トークンに収まるように文字列を切り詰める
-        text = text[:EMBEDDING_MAX_TOKENS]
+        text = text[:min(len(text) - 100, int(EMBEDDING_MAX_TOKENS/3))]
 
     embedding_response = client.embeddings.create(
         model=EMBEDDING_MODEL,
