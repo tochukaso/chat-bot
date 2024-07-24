@@ -4,8 +4,8 @@ import axios from 'axios';
 import ChatMessage from './ChatMessage';
 
 const ChatContainer = styled.div`
-  width: 400px;
-  height: 600px;
+  width: 800px;
+  height: 1000px;
   border: 1px solid ${({ theme }) => theme.colors.secondary};
   border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
@@ -63,7 +63,7 @@ const Chatbot: React.FC = () => {
     useEffect(() => {
         const fetchInitialMessage = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/api/chat');
+                const response = await axios.get('http://localhost:4000/chat');
                 const initialMessage: Message = { text: response.data.reply, sender: 'bot' };
                 setMessages([initialMessage]);
             } catch (error) {
@@ -82,7 +82,7 @@ const Chatbot: React.FC = () => {
         setInputValue('');
 
         try {
-            const mockResponse = await axios.post('http://localhost:4000/api/chat', {
+            const mockResponse = await axios.post('http://localhost:4000/chat', {
                 message: inputValue,
             });
 
