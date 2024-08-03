@@ -6,7 +6,8 @@ import pandas as pd  # for storing text and embeddings data
 from bs4 import BeautifulSoup
 
 from db.chroma import save_embedding_to_chroma
-from db.create_embedding import create_embedding
+from openai_api.embedding import embedding
+from util import log
 
 # XMLファイルを読み込む
 tree = ET.parse('db/data/Wikipedia.xml')
@@ -42,13 +43,14 @@ def remove_newlines(s):
 pages = []
 for page in root.findall('mw:page', ns):
     title, text = get_page_info(page)
-    embedding = create_embedding(text)
+    log.info(f"processing {title}.")
+    embedded = embedding(text)
     json_data = {
         'title': title,
         'text': text,
     }
-    json_string = json.dumps(json_data)
-    pages.append({'text': json_string, 'embedding': embedding})
+    json_string = json.dumps(json_data, ensure_ascii=False, separators=(',', ':'))
+    pages.append({'text': json_string, 'embedding': embedded})
 
 df = pd.DataFrame(pages)
 save_embedding_to_chroma(df)

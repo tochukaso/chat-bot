@@ -24,7 +24,9 @@ def get_embedding_collection():
 def save_embedding_to_chroma(df_embedding):
     w_collection = chroma_client.get_or_create_collection(name='wikipedia')
     # すでにデータが登録されている場合は削除する
-    w_collection.delete()
+    if w_collection.count() > 0:
+        w_collection.delete(w_collection.get()['ids'])
+
     ids = df_embedding.index.astype(str).tolist()
     w_collection.add(
         ids=ids,
