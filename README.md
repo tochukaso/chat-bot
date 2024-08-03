@@ -10,3 +10,19 @@ Wikipeadiaの情報を元にRAGの精度向上方法を検討します。
 - [Node.js](https://nodejs.org/) (v18.16.0 以上推奨)
 - [npm](https://www.npmjs.com/) (v9.5.1 以上推奨)
 
+
+## Front end
+
+### 起動方法
+
+``` sh
+npm start
+```
+
+Front end は [http://localhost:3000](http://localhost:3000) でアクセスできます。
+
+README は [こちら](front-end/README.md)
+
+## Back end
+
+README は [こちら](back-end/README.md)
