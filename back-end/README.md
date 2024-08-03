@@ -12,7 +12,7 @@ Pythonのプロジェクトの初期化
 ```bash
 python3.12 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Pythonのサーバープログラムを実行するためのパッケージのインストール
@@ -30,14 +30,7 @@ pip3 install "uvicorn[standard]"
 uvicorn server:app --reload --port 4000\
 ```
 
-localhost:4000/docs にアクセスすると、Swagger UIが表示されます。
-
-# How to Update Packages
-
-```sh
-pip3 list -o | cut -f1 -d' ' | tr " " "\n" | awk '{if(NR>=3)print}' | cut -d' ' -f1 | xargs -n1 pip3 install -U
-pip3 freeze > requirements.txt
-```
+http://localhost:4000/docs にアクセスすると、Swagger UIが表示されます。
 
 # How to create vector data
 
