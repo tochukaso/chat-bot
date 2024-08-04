@@ -1,3 +1,6 @@
+"""
+OpenAI APIを使用して、ユーザーの質問に回答する
+"""
 import os
 import json
 from typing import List, Optional
