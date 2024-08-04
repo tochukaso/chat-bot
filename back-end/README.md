@@ -52,7 +52,7 @@ Open AIの embedding を使って、事前にWikipedia情報をベクトルデ�
 python3 create_index.py
 ```
 
-## How to lint- 
+## How to lint
 
 ```sh
 pylint **/*.py
