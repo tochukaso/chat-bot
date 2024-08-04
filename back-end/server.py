@@ -1,3 +1,6 @@
+"""
+FastAPI サーバーのエントリーポイント
+"""
 import os
 
 from fastapi import FastAPI
@@ -28,9 +31,18 @@ app.add_middleware(
 
 @app.get("/health")
 def health_check():
+    """
+    ヘルスチェック
+    :return:
+    """
     return {"health": "ok"}
 
 
 @app.post("/chat")
 def chat(query_input: QueryInput):
+    """
+    チャットのエンドポイント
+    :param query_input:
+    :return:
+    """
     return query(query_input)

@@ -1,3 +1,6 @@
+"""
+Utility functions.
+"""
 import tiktoken
 
 from config.openai import GPT_MODEL
