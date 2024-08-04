@@ -32,6 +32,18 @@ uvicorn server:app --reload --port 4000\
 
 http://localhost:4000/docs にアクセスすると、Swagger UIが表示されます。
 
+
+Dockerを使用して立ち上げることも出来ます。
+
+```
+docker build -t chat-bot .
+docker run -e OPENAI_API_KEY=xxxx --name chat-bot -d -p 80:80 chat-bot
+```
+
+localhost:80/docs にアクセスすると、Swagger UIが表示されます。
+
+
+
 # How to create vector data
 
 Open AIの embedding を使って、事前にWikipedia情報をベクトルデータとして保存します。
@@ -40,7 +52,7 @@ Open AIの embedding を使って、事前にWikipedia情報をベクトルデ�
 python3 create_index.py
 ```
 
-## How to lint 
+## How to lint- 
 
 ```sh
 pylint **/*.py
