@@ -1,3 +1,7 @@
+"""
+chromadbにwikipediaのベクトルデータを保存します
+"""
+
 import json
 import re
 import xml.etree.ElementTree as ET
@@ -18,31 +22,31 @@ ns = {'mw': 'http://www.mediawiki.org/xml/export-0.11/'}
 
 
 # ページ情報を取得する関数
-def get_page_info(page):
-    title = page.find('mw:title', ns).text
-    text = page.find('.//mw:text', ns).text
-    return title, treat_string(text)
+def __get_page_info(page_info):
+    page_title = page_info.find('mw:title', ns).text
+    page_text = page_info.find('.//mw:text', ns).text
+    return page_title, __treat_string(page_text)
 
 
 # 正規表現を使って、{{}}と{||}のカッコと中の文字を削除し、[[]]のカッコを外す
-pattern = r"\{\{.*?\}\}|\{\|\|.*?\|\|\}|\[\[(.*?)\]\]"
+PATTERN = r"\{\{.*?\}\}|\{\|\|.*?\|\|\}|\[\[(.*?)\]\]"
 
 
-def treat_string(str_text):
+def __treat_string(str_text):
     soup = BeautifulSoup(str_text, 'html.parser')
     str_text = soup.get_text(strip=True, separator='\n')
-    str_text = remove_newlines(str_text)
-    return re.sub(pattern, "", str_text)
+    str_text = __remove_newlines(str_text)
+    return re.sub(PATTERN, "", str_text)
 
 
-def remove_newlines(s):
-    return s.replace('\n', '')
+def __remove_newlines(str_text):
+    return str_text.replace('\n', '')
 
 
 # すべてのページのタイトルとテキストをリストに保存
 pages = []
 for page in root.findall('mw:page', ns):
-    title, text = get_page_info(page)
+    title, text = __get_page_info(page)
     log.info(f"processing {title}.")
     embedded = embedding(text)
     json_data = {

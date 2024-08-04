@@ -1,3 +1,6 @@
+"""
+OpenAIのembeddingを使用する
+"""
 import os
 
 from openai import OpenAI
@@ -10,6 +13,11 @@ client = OpenAI(
 
 
 def embedding(text):
+    """
+    Call OpenAI API embedding function.
+    :param text:
+    :return:
+    """
     # トークン数が8192に収まるまでループ処理する
     while True:
         tokens = count_tokens(text, EMBEDDING_MODEL)
