@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 
 from db.chroma import save_embedding_to_chroma
 from openai_api.embedding import embedding
+from openai_api.summarize import summarize
 from util import log
 
 # XMLファイルを読み込む
@@ -19,6 +20,7 @@ root = tree.getroot()
 
 # 名前空間の取得
 ns = {'mw': 'http://www.mediawiki.org/xml/export-0.11/'}
+
 
 
 # ページ情報を取得する関数
@@ -47,11 +49,14 @@ def __remove_newlines(str_text):
 pages = []
 for page in root.findall('mw:page', ns):
     title, text = __get_page_info(page)
-    log.info(f"processing {title}.")
-    embedded = embedding(text)
+    summarized_text = summarize(text)
+    log.info(f"processing [{title}], [{summarized_text}].")
+
+    embedded = embedding(summarized_text)
     json_data = {
         'title': title,
         'text': text,
+        'summary': summarized_text,
     }
     json_string = json.dumps(json_data, ensure_ascii=False, separators=(',', ':'))
     pages.append({'text': json_string, 'embedding': embedded})

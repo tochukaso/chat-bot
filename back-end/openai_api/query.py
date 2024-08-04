@@ -60,15 +60,9 @@ def __exec_rag(query_input):
 
     rag_jsons = []
     for string, relatedness in zip(strings, relatednesses):
-        log.info(relatedness, string)
         data = json.loads(string)
-        extracted = {
-            'title': data['title'],
-            'text': data['text'],
-        }
-
-        json_string = json.dumps(extracted, ensure_ascii=False, separators=(',', ':'))
-        rag_jsons.append(json_string)
+        log.info(relatedness, data['summary'])
+        rag_jsons.append(data['text'])
 
     return ",".join(rag_jsons)
 

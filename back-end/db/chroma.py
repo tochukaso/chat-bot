@@ -43,7 +43,7 @@ def save_embedding_to_chroma(df_embedding):
 
 
 def detect_similarity(
-        query_embedding: str,
+        query_embedding: [],
         max_results: int = 100) -> tuple[list[str], list[float]]:
     """
     登録済みのwikipediaのベクトルデータと入力値の類似度を検出して上位N件を返す

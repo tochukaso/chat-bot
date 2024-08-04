@@ -6,7 +6,7 @@ import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from chat.query import QueryInput, query
+from openai_api.query import QueryInput, query
 
 is_dev = os.getenv('IS_DEV', 'true')
 
